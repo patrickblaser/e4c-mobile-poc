@@ -1,3 +1,4 @@
+import { QuestionaireDetailPage } from './../questionaire-detail/questionaire-detail';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -28,9 +29,16 @@ export class ListPage {
     }
   }
 
-  itemTapped(event, item) {
+  itemTappedOld(event, item) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(ListPage, {
+      item: item
+    });
+  }
+
+  itemTapped(event, item) {
+    // That's right, we're pushing to ourselves!
+    this.navCtrl.push(QuestionaireDetailPage, {
       item: item
     });
   }

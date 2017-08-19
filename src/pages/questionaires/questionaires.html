@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Questionaires</ion-title>
+    <ion-buttons end>
+      <button (click)="addQuestionaire()">
+              <ion-icon name="add"></ion-icon>
+          </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let questionaire of questionaires" (click)="editSelected($event, questionaire)">
+            {{questionaire.name}}
+            <div class="item-note" item-right>
+                <button ion-button icon-only round outline ion-stop-event="click" (click)="duplicateSelected($event, questionaire)">
+                    <ion-icon name="copy"></ion-icon>
+                </button>
+    <button ion-button icon-only round outline ion-stop-event="click" (click)="deleteSelected($event, questionaire)">
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+    </div>
+    </button>
+  </ion-list>
+</ion-content>
