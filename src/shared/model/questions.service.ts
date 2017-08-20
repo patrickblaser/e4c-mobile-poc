@@ -37,10 +37,10 @@ export class QuestionsService {
 
 
     assignQuestionToQuestionaire (questionaireId:string, questionId: string) {
-        this.db.database.ref('questionionaire/' + questionaireId + '/questions/' + questionId).update({position: -1});
+        this.db.database.ref('questionionaire/questions/' + questionaireId + '/' + questionId).update({position: -1});
     }
 
     removeQuestionFromQuestionaire (questionaireId:string, questionId: string) {
-        this.db.database.ref('questionionaire/' + questionaireId + '/questions/' + questionId).set(null);
+        this.db.database.ref('questionionaire/questions/' + questionaireId + '/' + questionId).set(null);
     }
 }

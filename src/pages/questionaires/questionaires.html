@@ -5,21 +5,18 @@
       </button>
     <ion-title>Questionaires</ion-title>
     <ion-buttons end>
-        <button ion-button icon-only color="dark" (click)="showSearch()">
+      <button ion-button icon-only color="dark" (click)="showSearch()">
             <ion-icon name="search"></ion-icon>
         </button>
-        <button ion-button icon-only color="dark" (click)="addQuestionaire()">
+      <button ion-button icon-only color="dark" (click)="addQuestionaire()">
             <ion-icon name="add"></ion-icon>
         </button>
-</ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar [hidden]="!showSearchBar"
-    [(ngModel)]="searchFilter"
-    (ionInput)="onInput($event)"
-    (ionCancel)="onCancel($event)">
+  <ion-searchbar [hidden]="!showSearchBar" [(ngModel)]="searchFilter" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
   </ion-searchbar>
   <ion-list>
     <button ion-item *ngFor="let questionaire of questionaires | propertyFilter: 'name': searchFilter" (click)="editSelected($event, questionaire)">
@@ -34,7 +31,7 @@
     </div>
     </button>
 
-<!--
+    <!--
   <ion-item-sliding *ngFor="let questionaire of questionaires" (click)="editSelected($event, questionaire)">
     <ion-item>
       {{questionaire.name}}
@@ -51,10 +48,10 @@
         </ion-item-options>
     </ion-item-sliding>
   -->
-</ion-list>
+  </ion-list>
 </ion-content>
 <ion-footer>
-    <ion-toolbar>
-        &nbsp;&nbsp;Amount of questionaires: {{ questionaires.length }}
-    </ion-toolbar>
-  </ion-footer>
+  <ion-toolbar>
+    &nbsp;&nbsp;Amount of questionaires: {{ questionaires.length }}
+  </ion-toolbar>
+</ion-footer>

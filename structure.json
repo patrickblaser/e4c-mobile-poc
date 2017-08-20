@@ -1,0 +1,26 @@
+{
+  'user': {
+    'answers': {
+      userID: {
+        [{
+            questionaireID: [
+              pushKey: {                <=== generated when assigned to user
+                'properties': {
+                  startDate,
+                  endDate,
+                  status
+                },
+                'questions': [{         <=== generated when user opens questionaire first time
+                  questionId: {
+                    questionText,     (optional ?)
+                    answer,
+                    answerDateTime
+                  }
+                }]
+              }
+            ]
+        }
+      }
+    }
+  }
+}

@@ -9,11 +9,11 @@
   <ion-navbar>
     <ion-title>Questionaire Detail</ion-title>
     <ion-buttons end>
-        <button ion-button icon-only (click)="edit()" [hidden]="newItem">
+      <button ion-button icon-only (click)="edit()" [hidden]="newItem">
                 <ion-icon name="create"></ion-icon>
             </button>
-      </ion-buttons>
-    </ion-navbar>  
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
@@ -22,43 +22,43 @@
   <ion-list>
 
 
-  <questionaire-form [initialValue]="questionaire" [editEnabled]="editEnabled" #form></questionaire-form>
-  <button ion-button (click)="save(form.value)" [hidden]="!editEnabled" [disabled]="!form.valid">Save</button>
-  <button ion-button (click)="cancel()" [hidden]="!editEnabled" [disabled]="!form.valid">Cancel</button>
-  
+    <questionaire-form [initialValue]="questionaire" [editEnabled]="editEnabled" #form></questionaire-form>
+    <button ion-button (click)="save(form.value)" [hidden]="!editEnabled" [disabled]="!form.valid">Save</button>
+    <button ion-button (click)="cancel()" [hidden]="!editEnabled" [disabled]="!form.valid">Cancel</button>
+
   </ion-list>
 
   <ion-list [hidden]="editEnabled || assignedQuestionIds.length == 0">
-      <ion-list-header>
-          Assigned Questions
-      </ion-list-header>
-      <ion-item *ngFor="let question of questions | existsFilter: '$key': assignedQuestionIds">
-                {{question.value}}
-                <div class="item-note" item-right>
-                    <button ion-button color="warning" ion-stop-event="click" (click)="unassignQuestion(question.$key)">
+    <ion-list-header>
+      Assigned Questions
+    </ion-list-header>
+    <ion-item *ngFor="let question of questions | existsFilter: '$key': assignedQuestionIds">
+      {{question.value}}
+      <div class="item-note" item-right>
+        <button ion-button color="warning" ion-stop-event="click" (click)="unassignQuestion(question.$key)">
                         <ion-icon name="remove"></ion-icon>
                     </button>
-              </div>
-    
-      </ion-item>
-    </ion-list>
-  
-    <ion-list [hidden]="editEnabled || questions.length == assignedQuestionIds.length">
-      <ion-list-header>
-          Unassigned Questions
-      </ion-list-header>
-      <ion-item *ngFor="let question of questions | notExistsFilter: '$key': assignedQuestionIds">
-                {{question.value}}
-                <div class="item-note" item-right>
-                    <button ion-button color="success" ion-stop-event="click" (click)="assignQuestion(question.$key)">
+      </div>
+
+    </ion-item>
+  </ion-list>
+
+  <ion-list [hidden]="editEnabled || questions.length == assignedQuestionIds.length">
+    <ion-list-header>
+      Unassigned Questions
+    </ion-list-header>
+    <ion-item *ngFor="let question of questions | notExistsFilter: '$key': assignedQuestionIds">
+      {{question.value}}
+      <div class="item-note" item-right>
+        <button ion-button color="success" ion-stop-event="click" (click)="assignQuestion(question.$key)">
                         <ion-icon name="add"></ion-icon>
                     </button>
-              </div>
-    
-      </ion-item>
-    </ion-list>
-  
-<!--
+      </div>
+
+    </ion-item>
+  </ion-list>
+
+  <!--
   <ion-list>
     <ion-item>
       <ion-label color="primary" stacked>Name</ion-label>
