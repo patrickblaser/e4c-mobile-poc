@@ -1,0 +1,42 @@
+<!--
+  Generated template for the QuestionDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    
+      <ion-navbar>
+        <ion-title>Question Detail</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="edit()" [hidden]="newItem">
+                    <ion-icon name="create"></ion-icon>
+                </button>
+          </ion-buttons>
+        </ion-navbar>  
+    </ion-header>
+    
+    
+    <ion-content padding>
+    
+      <ion-list>
+    
+    
+      <question-form [initialValue]="question" [editEnabled]="editEnabled" #form></question-form>
+      <button ion-button (click)="save(form.value)" [hidden]="!editEnabled" [disabled]="!form.valid">Save</button>
+      <button ion-button (click)="cancel()" [hidden]="!editEnabled" [disabled]="!form.valid">Cancel</button>
+      
+      </ion-list>
+    <!--
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary" stacked>Name</ion-label>
+          <ion-input type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-textarea placeholder="Enter a description"></ion-textarea>
+        </ion-item>
+      </ion-list>
+    -->
+    </ion-content>
+    

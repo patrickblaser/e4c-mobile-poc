@@ -10,7 +10,6 @@ import { FormsModule } from "@angular/forms";
   ],
   imports: [
     IonicPageModule.forChild(QuestionairesPage),
-    QuestionairesListComponent,
     FormsModule
   ],
 	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

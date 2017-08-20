@@ -5,25 +5,56 @@
       </button>
     <ion-title>Questionaires</ion-title>
     <ion-buttons end>
-      <button (click)="addQuestionaire()">
-              <ion-icon name="add"></ion-icon>
-          </button>
-    </ion-buttons>
+        <button ion-button icon-only color="dark" (click)="showSearch()">
+            <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only color="dark" (click)="addQuestionaire()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+</ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-searchbar [hidden]="!showSearchBar"
+    [(ngModel)]="searchFilter"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
   <ion-list>
-    <button ion-item *ngFor="let questionaire of questionaires" (click)="editSelected($event, questionaire)">
+    <button ion-item *ngFor="let questionaire of questionaires | propertyFilter: 'name': searchFilter" (click)="editSelected($event, questionaire)">
             {{questionaire.name}}
             <div class="item-note" item-right>
-                <button ion-button icon-only round outline ion-stop-event="click" (click)="duplicateSelected($event, questionaire)">
+                <button ion-button ion-stop-event="click" (click)="duplicateSelected($event, questionaire)">
                     <ion-icon name="copy"></ion-icon>
                 </button>
-    <button ion-button icon-only round outline ion-stop-event="click" (click)="deleteSelected($event, questionaire)">
+    <button ion-button color="danger" ion-stop-event="click" (click)="deleteSelected($event, questionaire)">
                     <ion-icon name="trash"></ion-icon>
                 </button>
     </div>
     </button>
-  </ion-list>
+
+<!--
+  <ion-item-sliding *ngFor="let questionaire of questionaires" (click)="editSelected($event, questionaire)">
+    <ion-item>
+      {{questionaire.name}}
+    </ion-item>
+    <ion-item-options icon-start>
+        <button ion-button ion-stop-event="click" (click)="duplicateSelected($event, questionaire)">
+          <ion-icon name="copy"></ion-icon>
+          Copy
+        </button>
+          <button ion-button ion-stop-event="click" (click)="deleteSelected($event, questionaire)">
+            <ion-icon name="trash"></ion-icon>
+            Delete
+          </button>
+        </ion-item-options>
+    </ion-item-sliding>
+  -->
+</ion-list>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        &nbsp;&nbsp;Amount of questionaires: {{ questionaires.length }}
+    </ion-toolbar>
+  </ion-footer>

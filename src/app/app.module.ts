@@ -1,9 +1,10 @@
-import { QuestionaireFormComponent } from './../components/questionaire-form/questionaire-form';
-import { QuestionairesPage } from './../pages/questionaires/questionaires';
-import { ComponentsModule } from './../components/components.module';
-import { QuestionairesListComponent } from './../components/questionaires-list/questionaires-list';
-import { QuestionaireDetailPage } from './../pages/questionaire-detail/questionaire-detail';
-import { QuestionairesService } from './../shared/model/questionaires.service';
+import { PropsFilterPipe } from './../shared/filter/propsFilterPipe';
+import { NotExistsFilterPipe } from './../shared/filter/notExistsFilterPipe';
+import { ExistsFilterPipe } from './../shared/filter/existsFilterPipe';
+import { QuestionFormComponent } from './../components/question-form/question-form';
+import { QuestionsService } from './../shared/model/questions.service';
+import { QuestionDetailPage } from './../pages/question-detail/question-detail';
+import { QuestionsPage } from './../pages/questions/questions';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -18,8 +19,12 @@ import {AngularFireAuthModule} from "angularfire2/auth";
 import {firebaseConfig} from "../environments/firebase.config";
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { QuestionairesPage } from './../pages/questionaires/questionaires';
+import { QuestionaireDetailPage } from './../pages/questionaire-detail/questionaire-detail';
+
+import { QuestionaireFormComponent } from './../components/questionaire-form/questionaire-form';
+import { QuestionairesListComponent } from './../components/questionaires-list/questionaires-list';
+import { QuestionairesService } from './../shared/model/questionaires.service';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,11 +32,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
+    QuestionsPage,
+    QuestionDetailPage,
     QuestionairesPage,
     QuestionaireDetailPage,
-    QuestionaireFormComponent
+    QuestionaireFormComponent,
+    QuestionFormComponent,
+    ExistsFilterPipe,
+    NotExistsFilterPipe,
+    PropsFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -43,8 +52,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
+    QuestionsPage,
+    QuestionDetailPage,
     QuestionairesPage,
     QuestionaireDetailPage
   ],
@@ -52,7 +61,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    QuestionairesService
+    QuestionairesService,
+    QuestionsService
   ]
 })
 export class AppModule {}
