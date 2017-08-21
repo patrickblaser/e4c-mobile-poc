@@ -1,8 +1,10 @@
-import { QuestionaireDetailPage } from './../questionaire-detail/questionaire-detail';
-import { QuestionairesService } from './../../shared/model/questionaires.service';
-import { Questionaire } from './../../shared/model/questionaire';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { QuestionaireDetailPage } from './../questionaire-detail/questionaire-detail';
+import { QuestionairesService } from './../../shared/model/questionaires.service';
+import { QuestionsService } from './../../shared/model/questions.service';
+import { Questionaire } from './../../shared/model/questionaire';
 
 /**
  * Generated class for the QuestionairesPage page.
@@ -20,9 +22,9 @@ export class QuestionairesPage {
 
   questionaires: Questionaire[] = [];
   searchFilter: string = '';
-  showSearchBar: boolean = false;
+  searchBarEnabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionairesService: QuestionairesService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionairesService: QuestionairesService, private questionsService: QuestionsService) {
   }
 
   ionViewDidLoad() {
@@ -49,36 +51,50 @@ export class QuestionairesPage {
       newItem: true});
   }
 
-  editSelected(event, item) {
+  editQuestionaire(event, item) {
     this.navCtrl.push(QuestionaireDetailPage, {
       newItem: false,
       item: item
     });
   }
 
-  duplicateSelected(event, item) {
-    let questionaire = new Questionaire(null, item.name + ' (Copy)', item.description);
-    delete questionaire['$key'];
-    this.questionairesService.saveQuestionaire(null, questionaire);
+  duplicateQuestionaire(event, questionaire) {
+    let newQuestionaire = new Questionaire(null, questionaire.name + ' (Copy)', questionaire.description, Questionaire.QuestionaireStatus.PENDING);
+    let questionsService = this.questionsService;
+    let questionaireIdFrom = questionaire.$key;
+
+    delete newQuestionaire['$key'];
+    this.questionairesService.saveQuestionaire(null, newQuestionaire).then(function(result) {
+      return questionsService.copyQuestionsFromQuestionaire(questionaireIdFrom, result.key);
+    })
+    .then(function() {
+      console.log
+    });
   }
 
-  deleteSelected(event, item) {
-    this.questionairesService.deleteQuestionaire(item)
-    .subscribe(firebaseUser => {
+  deleteQuestionaire(event, questionaire) {
+    let questionsService = this.questionsService;
+    let toastCtrl = this.toastCtrl;
+
+    let promises = [];
+    promises.push(this.questionairesService.deleteQuestionaire(questionaire.$key));
+    promises.push(this.questionsService.removeAllAssignedQuestionsFromQuestionaire(questionaire.$key));
+
+    Promise.all(promises).then(function(data) {
       console.log('remove:succcess');
-      let toast = this.toastCtrl.create({
+      console.log('remove:succcess');
+      let toast = toastCtrl.create({
         message: 'Questionaire has been removed',
         duration: 3000,
         position: 'top',
         cssClass: 'green'
       });
       toast.present();
-    },
-      error => {}/* Handle error here */);
+    });
   }
 
-  showSearch() {
-    this.showSearchBar = !this.showSearchBar;
+  toggleSearchBar() {
+    this.searchBarEnabled = !this.searchBarEnabled;
   }
 
   onInput(event) {
@@ -86,7 +102,7 @@ export class QuestionairesPage {
   }
 
   onCancel(event) {
-    this.showSearchBar = false;
+    this.searchBarEnabled = false;
     this.searchFilter = '';
     console.log(event);
   }

@@ -32,7 +32,7 @@ export class QuestionaireDetailPage {
     this.editEnabled = this.newItem;
 
     if (!this.questionaire) {
-      this.questionaire = new Questionaire(null, '', '');
+      this.questionaire = new Questionaire(null, '', '', Questionaire.QuestionaireStatus.PENDING);
     }
 
     this.questionsService.findAllQuestions()
