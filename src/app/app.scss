@@ -14,3 +14,15 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.item.item-md.list-header.list-header-md {
+    background-color:  #f4f4f4;
+  }
+
+  .be-shiro-logo {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  .be-shiro-logo a img {
+      height: 33px;
+  }
