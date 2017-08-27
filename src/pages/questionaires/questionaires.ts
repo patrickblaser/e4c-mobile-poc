@@ -38,6 +38,7 @@ export class QuestionairesPage {
   }
 
   ngInit() {
+    //urm: double subscription with ionViewDidLoad?
     console.log('ngInit QuestionairesPage');
     this.questionairesService.findAllQuestionaires()
       .do(console.log)
@@ -77,6 +78,7 @@ export class QuestionairesPage {
     let toastCtrl = this.toastCtrl;
 
     let promises = [];
+    //urm: client should not have to know about the data dependencies. The questionaireService should handle this.
     promises.push(this.questionairesService.deleteQuestionaire(questionaire.$key));
     promises.push(this.questionsService.removeAllAssignedQuestionsFromQuestionaire(questionaire.$key));
 

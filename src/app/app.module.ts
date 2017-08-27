@@ -50,6 +50,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AngularFireAuthModule
 ],
   bootstrap: [IonicApp],
+  //urm: use lazy loading instead
   entryComponents: [
     MyApp,
     QuestionsPage,
