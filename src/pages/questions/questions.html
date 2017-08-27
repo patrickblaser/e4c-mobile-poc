@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="shiro-blue">
     <button ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
         </button>
     <ion-title>Questions</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only color="dark" (click)="addQuestion()">
+      <button ion-button icon-only (click)="addQuestion()">
                 <ion-icon name="add"></ion-icon>
             </button>
     </ion-buttons>
@@ -14,8 +14,11 @@
 
 <ion-content>
   <ion-list>
+      <ion-list-header>
+          <ion-icon name="list" item-left></ion-icon>Defined Questions
+        </ion-list-header>
     <button ion-item *ngFor="let question of questions" (click)="editSelected($event, question)">
-              {{question.value}}
+              <h2>{{question.value}}</h2>
               <div class="item-note" item-right>
       <button ion-button color="danger" ion-stop-event="click" (click)="deleteSelected($event, question)">
                       <ion-icon name="trash"></ion-icon>

@@ -5,8 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="shiro-blue">
     <ion-title>Questionaire Detail</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="edit()" [hidden]="newItem">
@@ -17,42 +16,39 @@
 </ion-header>
 
 
-<ion-content padding>
-
-  <ion-list>
-
+<ion-content padding class="questionaire-detail">
 
     <questionaire-form [initialValue]="questionaire" [editEnabled]="editEnabled" #form></questionaire-form>
     <button ion-button (click)="save(form.value)" [hidden]="!editEnabled" [disabled]="!form.valid">Save</button>
     <button ion-button (click)="cancel()" [hidden]="!editEnabled" [disabled]="!form.valid">Cancel</button>
 
-  </ion-list>
-
+  <br>
   <ion-list [hidden]="editEnabled || assignedQuestionIds.length == 0">
     <ion-list-header>
-      Assigned Questions
+      <ion-icon name="checkmark" item-left></ion-icon>Assigned Questions
     </ion-list-header>
+    <!-- urm: lets discuss the existsFilter. Is this a UI task? Compare to search which in my opinion is a UI task -->
     <ion-item *ngFor="let question of questions | existsFilter: '$key': assignedQuestionIds">
-      {{question.value}}
+      <p>{{question.value}}</p>
       <div class="item-note" item-right>
-        <button ion-button color="warning" ion-stop-event="click" (click)="unassignQuestion(question.$key)">
+        <button ion-button color="danger" ion-stop-event="click" (click)="unassignQuestion(question.$key)">
                         <ion-icon name="remove"></ion-icon>
-                    </button>
+        </button>
       </div>
 
     </ion-item>
   </ion-list>
-
+  <br>
   <ion-list [hidden]="editEnabled || questions.length == assignedQuestionIds.length">
     <ion-list-header>
-      Unassigned Questions
+      <ion-icon name="close" item-left></ion-icon>Unassigned Questions
     </ion-list-header>
     <ion-item *ngFor="let question of questions | notExistsFilter: '$key': assignedQuestionIds">
-      {{question.value}}
-      <div class="item-note" item-right>
+      <p>{{question.value}}</p>
+      <div item-right>
         <button ion-button color="success" ion-stop-event="click" (click)="assignQuestion(question.$key)">
                         <ion-icon name="add"></ion-icon>
-                    </button>
+    </button>
       </div>
 
     </ion-item>

@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="shiro-blue">
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
     <ion-title>Questionaires</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only color="dark" (click)="toggleSearchBar()">
+      <button ion-button icon-only (click)="toggleSearchBar()">
             <ion-icon name="search"></ion-icon>
         </button>
-      <button ion-button icon-only color="dark" (click)="addQuestionaire()">
+      <button ion-button icon-only (click)="addQuestionaire()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-buttons>
@@ -19,6 +19,9 @@
   <ion-searchbar [hidden]="!searchBarEnabled" [(ngModel)]="searchFilter" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
   </ion-searchbar>
   <ion-list>
+      <ion-list-header>
+          <ion-icon name="list" item-left></ion-icon>Defined Questionaires
+        </ion-list-header>
     <button ion-item *ngFor="let questionaire of questionaires | propertyFilter: 'name': searchFilter" (click)="editQuestionaire($event, questionaire)">
             {{questionaire.name}}
             <ion-badge></ion-badge>
