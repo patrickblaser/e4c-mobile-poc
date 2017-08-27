@@ -22,9 +22,9 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-$text-color:      #3f3f3f;
-$list-md-header-color: #43a047;
-$list-md-header-font-size: 1.8rem;
+$text-color:      #212121;
+$list-md-header-color: #757575;
+$list-md-header-font-size: 1.6rem;
 
 
 // Named Color Variables
@@ -35,10 +35,21 @@ $list-md-header-font-size: 1.8rem;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-$colors: (
+$colors1: (
   primary:    #3949ab,
   secondary:  #43a047,
   danger:     #fb8c00,
+  light:      #f4f4f4,
+  dark:       #222,
+  success:    #43a047,
+  shiro-blue:  #001749,
+  shiro-green: #009425
+);
+
+$colors: (
+  primary:    #1976D2,
+  secondary:  #4CAF50,
+  danger:     #FF5722,
   light:      #f4f4f4,
   dark:       #222,
   success:    #43a047,
