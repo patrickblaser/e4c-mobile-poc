@@ -1,4 +1,4 @@
-import { QuestionsService } from './../../shared/model/questions.service';
+import { QuestionairesService } from './../../shared/model/questionaires.service';
 import { Question } from './../../shared/model/question';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -21,7 +21,7 @@ export class QuestionDetailPage {
   editEnabled: boolean = false;
   newItem: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private questionsService: QuestionsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private questionairesService: QuestionairesService) {
     this.question = navParams.get('item');
     this.newItem = navParams.get('newItem');
     this.editEnabled = this.newItem;
@@ -39,7 +39,7 @@ export class QuestionDetailPage {
   }
 
   save(question) {
-    this.questionsService.saveQuestion(this.question.$key, question);
+    this.questionairesService.saveQuestion(this.question.$key, question);
 /*      .subscribe(
       () => {
         alert("lesson saved succesfully.");

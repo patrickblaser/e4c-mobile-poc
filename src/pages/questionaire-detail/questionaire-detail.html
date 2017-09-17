@@ -28,11 +28,17 @@
       <ion-icon name="checkmark" item-left></ion-icon>Assigned Questions
     </ion-list-header>
     <!-- urm: lets discuss the existsFilter. Is this a UI task? Compare to search which in my opinion is a UI task -->
-    <ion-item *ngFor="let question of questions | existsFilter: '$key': assignedQuestionIds">
+    <ion-item *ngFor="let question of assignedQuestions; let currentIndex=index;">
       <p>{{question.value}}</p>
       <div class="item-note" item-right>
+        <button ion-button ion-stop-event="click" (click)="moveDown(question.$key, currentIndex)" [disabled]="currentIndex == assignedQuestionIds.length-1">
+          <ion-icon name="arrow-round-down"></ion-icon>
+        </button>
+        <button ion-button ion-stop-event="click" (click)="moveUp(question.$key, currentIndex)"  [disabled]="currentIndex == 0">
+          <ion-icon name="arrow-round-up"></ion-icon>
+        </button>
         <button ion-button color="danger" ion-stop-event="click" (click)="unassignQuestion(question.$key)">
-                        <ion-icon name="remove"></ion-icon>
+          <ion-icon name="remove"></ion-icon>
         </button>
       </div>
 

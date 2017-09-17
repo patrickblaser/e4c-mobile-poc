@@ -26,6 +26,9 @@
             {{questionaire.name}}
             <ion-badge></ion-badge>
             <div class="item-note" item-right>
+                <button ion-button ion-stop-event="click" (click)="generateForUser($event, questionaire)">
+                  <ion-icon name="play"></ion-icon>
+                </button>
                 <button ion-button ion-stop-event="click" (click)="duplicateQuestionaire($event, questionaire)">
                     <ion-icon name="copy"></ion-icon>
                 </button>

@@ -2,8 +2,8 @@ import { PropsFilterPipe } from './../shared/filter/propsFilterPipe';
 import { NotExistsFilterPipe } from './../shared/filter/notExistsFilterPipe';
 import { ExistsFilterPipe } from './../shared/filter/existsFilterPipe';
 import { QuestionFormComponent } from './../components/question-form/question-form';
-import { QuestionsService } from './../shared/model/questions.service';
 import { QuestionDetailPage } from './../pages/question-detail/question-detail';
+import { QuestionPage } from './../pages/question/question';
 import { QuestionsPage } from './../pages/questions/questions';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -32,6 +32,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
+    QuestionPage,
     QuestionsPage,
     QuestionDetailPage,
     QuestionairesPage,
@@ -53,6 +54,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   //urm: use lazy loading instead
   entryComponents: [
     MyApp,
+    QuestionPage,
     QuestionsPage,
     QuestionDetailPage,
     QuestionairesPage,
@@ -62,8 +64,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    QuestionairesService,
-    QuestionsService
+    QuestionairesService
   ]
 })
 export class AppModule {}

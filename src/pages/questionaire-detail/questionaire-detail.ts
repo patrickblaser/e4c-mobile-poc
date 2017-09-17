@@ -1,4 +1,3 @@
-import { QuestionsService } from './../../shared/model/questions.service';
 import { QuestionairesService } from './../../shared/model/questionaires.service';
 import { Questionaire } from './../../shared/model/questionaire';
 import { Question } from './../../shared/model/question';
@@ -25,8 +24,9 @@ export class QuestionaireDetailPage {
 
   questions: Question[] = [];
   assignedQuestionIds: any[] = [];
+  assignedQuestions: Question[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private questionairesService: QuestionairesService, private questionsService: QuestionsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private questionairesService: QuestionairesService) {
     this.questionaire = navParams.get('item');
     this.newItem = navParams.get('newItem');
     this.editEnabled = this.newItem;
@@ -35,16 +35,20 @@ export class QuestionaireDetailPage {
       this.questionaire = new Questionaire(null, '', '', Questionaire.QuestionaireStatus.PENDING);
     }
 
-    this.questionsService.findAllQuestions()
-      .do(console.log)
+    this.questionairesService.getAllQuestions()
       .subscribe(
         questions => this.questions = questions
       );
 
-    this.questionsService.findAssignedQuestionIds(this.questionaire.$key)
-      .do(console.log)
+      this.questionairesService.getAssignedQuestionIds(this.questionaire.$key)
       .subscribe(
         ids => this.assignedQuestionIds = ids
+      );
+
+      this.questionairesService.getAssignedQuestions(this.questionaire.$key)
+      .do( questions => console.log('assignedQuestions', questions))
+      .subscribe(
+        questions => this.assignedQuestions = questions
       );
 
   }
@@ -69,11 +73,11 @@ export class QuestionaireDetailPage {
   }
 
   assignQuestion(questionId) {
-    this.questionsService.assignQuestionToQuestionaire(this.questionaire.$key, questionId);
+    this.questionairesService.assignQuestionToQuestionaire(this.questionaire.$key, questionId);
   }
 
   unassignQuestion(questionId) {
-    this.questionsService.removeQuestionFromQuestionaire(this.questionaire.$key, questionId);
+    this.questionairesService.removeQuestionFromQuestionaire(this.questionaire.$key, questionId);
   }
 
   cancel() {

@@ -3,8 +3,8 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 
 import { QuestionaireDetailPage } from './../questionaire-detail/questionaire-detail';
 import { QuestionairesService } from './../../shared/model/questionaires.service';
-import { QuestionsService } from './../../shared/model/questions.service';
 import { Questionaire } from './../../shared/model/questionaire';
+import { QuestionPage } from './../question/question';
 
 /**
  * Generated class for the QuestionairesPage page.
@@ -24,13 +24,13 @@ export class QuestionairesPage {
   searchFilter: string = '';
   searchBarEnabled: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionairesService: QuestionairesService, private questionsService: QuestionsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionairesService: QuestionairesService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuestionairesPage');
 
-    this.questionairesService.findAllQuestionaires()
+    this.questionairesService.getAllQuestionaires()
       .do(console.log)
       .subscribe(
       questionaires => this.questionaires = questionaires
@@ -40,7 +40,7 @@ export class QuestionairesPage {
   ngInit() {
     //urm: double subscription with ionViewDidLoad?
     console.log('ngInit QuestionairesPage');
-    this.questionairesService.findAllQuestionaires()
+    this.questionairesService.getAllQuestionaires()
       .do(console.log)
       .subscribe(
       questionaires => this.questionaires = questionaires
@@ -59,28 +59,32 @@ export class QuestionairesPage {
     });
   }
 
+  generateForUser(event, questionaire) {
+    let key = this.questionairesService.generateQuestionaireForUser(questionaire.$key, 'user123');
+    this.navCtrl.push(QuestionPage, { questionaireId: questionaire.$key, key: key, userId: 'user123'});
+    event.stopPropagation();
+  }
+
   duplicateQuestionaire(event, questionaire) {
     let newQuestionaire = new Questionaire(null, questionaire.name + ' (Copy)', questionaire.description, Questionaire.QuestionaireStatus.PENDING);
-    let questionsService = this.questionsService;
+    let questionairesService = this.questionairesService;
     let questionaireIdFrom = questionaire.$key;
 
     delete newQuestionaire['$key'];
-    this.questionairesService.saveQuestionaire(null, newQuestionaire).then(function(result) {
-      return questionsService.copyQuestionsFromQuestionaire(questionaireIdFrom, result.key);
-    })
-    .then(function() {
-      console.log
-    });
+    this.questionairesService.saveQuestionaire(null, newQuestionaire)
+    .then(
+      resolve => questionairesService.copyQuestionsFromQuestionaire(questionaireIdFrom, resolve.key)
+    )
+    .then(resolve => console.log(resolve));
   }
 
   deleteQuestionaire(event, questionaire) {
-    let questionsService = this.questionsService;
     let toastCtrl = this.toastCtrl;
 
     let promises = [];
     //urm: client should not have to know about the data dependencies. The questionaireService should handle this.
     promises.push(this.questionairesService.deleteQuestionaire(questionaire.$key));
-    promises.push(this.questionsService.removeAllAssignedQuestionsFromQuestionaire(questionaire.$key));
+    promises.push(this.questionairesService.removeAllAssignedQuestionsFromQuestionaire(questionaire.$key));
 
     Promise.all(promises).then(function(data) {
       console.log('remove:succcess');

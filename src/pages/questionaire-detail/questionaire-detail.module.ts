@@ -1,4 +1,4 @@
-import { QuestionsService } from './../../shared/model/questions.service';
+import { QuestionairesService } from './../../shared/model/questionaires.service';
 import { QuestionaireFormComponent } from './../../components/questionaire-form/questionaire-form';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
@@ -11,7 +11,7 @@ import { QuestionaireDetailPage } from './questionaire-detail';
   imports: [
     IonicPageModule.forChild(QuestionaireDetailPage),
     QuestionaireFormComponent,
-    QuestionsService
+    QuestionairesService
   ],
 })
 export class QuestionaireDetailPageModule {}

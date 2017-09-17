@@ -1,5 +1,5 @@
 import { QuestionDetailPage } from './../question-detail/question-detail';
-import { QuestionsService } from './../../shared/model/questions.service';
+import { QuestionairesService } from './../../shared/model/questionaires.service';
 import { Question } from './../../shared/model/question';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
@@ -20,22 +20,13 @@ export class QuestionsPage {
 
   questions: Question[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionsService: QuestionsService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private questionairesService: QuestionairesService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad QuestionsPage');
 
-    this.questionsService.findAllQuestions()
-      .do(console.log)
-      .subscribe(
-      questions => this.questions = questions
-      )
-  }
-
-  ngInit() {
-    console.log('ngInit QuestionsPage');
-    this.questionsService.findAllQuestions()
+    this.questionairesService.getAllQuestions()
       .do(console.log)
       .subscribe(
       questions => this.questions = questions
@@ -55,7 +46,7 @@ export class QuestionsPage {
   }
 
   deleteSelected(event, item) {
-    this.questionsService.deleteQuestion(item)
+    this.questionairesService.deleteQuestion(item)
     .subscribe(firebaseUser => {
       console.log('remove:succcess');
       let toast = this.toastCtrl.create({

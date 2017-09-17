@@ -19,7 +19,7 @@ export class QuestionairesListComponent {
   constructor(private questionairesService: QuestionairesService) {  }
 
   ngInit() {
-    this.questionairesService.findAllQuestionaires().subscribe(
+    this.questionairesService.getAllQuestionaires().subscribe(
       questionaires => this.questionaires = questionaires
     )
   }
