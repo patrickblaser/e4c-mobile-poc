@@ -46,17 +46,41 @@ export class QuestionairesService {
     }
 
 
-    getUserQuestions(userId:string, questionaireId:string, questionaireVersion:string): Observable<Question[]> {
+    getUserQuestions(userId:string, questionaireId:string, questionaireVersion:string): Observable<any[]> {
+        console.log(userId, questionaireId, questionaireVersion);
         return this.db.list(`user/answers/${userId}/${questionaireId}/${questionaireVersion}/questions`,{
             query:
             {
               orderByChild: 'position'
             }
-          }).map(Question.fromJsonList);;
+          });
+    }
+
+    getUserQuestionaires(userId:string): Observable<any[]> {
+        return this.db.list(`user/answers/${userId}`)
+        .map(questionaires => questionaires.map( questionaire => {
+            let result = [];
+            for(var propt in questionaire){
+                result.push({
+                    questionaireId: questionaire.$key,
+                    questionaireVersion: propt,
+                    name: questionaire[propt].properties.name,
+                    status: questionaire[propt].properties.status,
+                    startDate: Moment(questionaire[propt].properties.startDate).format('DD.MM.YYYY'),
+                    finishedDate: (questionaire[propt].properties.finishedDate ? Moment(questionaire[propt].properties.finishedDate).format('DD.MM.YYYY') : ''),
+            });
+        }
+            return result;
+        })
+        )
     }
 
     saveUserAnswer(userId:string, questionaireId:string, questionaireVersion:string, questionId:string, answer:number) {
         this.db.database.ref(`user/answers/${userId}/${questionaireId}/${questionaireVersion}/questions/${questionId}`).update({answer});
+    }
+
+    saveUserQuestionaire(userId:string, questionaireId:string, questionaireVersion:string) {
+        this.db.database.ref(`user/answers/${userId}/${questionaireId}/${questionaireVersion}/properties`).update({finishedDate: Moment.now(), status: 'finished'});
     }
 
     assignQuestionToQuestionaire (questionaireId:string, questionId: string) {
@@ -75,17 +99,17 @@ export class QuestionairesService {
         return this.copyFbRecord(fromRef, toRef);
     }
 
-    generateQuestionaireForUser(questionaireId: string, userId: string): string {
-        console.log('generateQuestionaireForUser', questionaireId, userId);
-        const key = (this.db.database.ref(`user/answers/${userId}/${questionaireId}`).push({properties: {startDate:  Moment.now()}})).key;
+    generateQuestionaireForUser(questionaire: Questionaire, userId: string): string {
+        console.log('generateQuestionaireForUser', questionaire, userId);
+        const key = (this.db.database.ref(`user/answers/${userId}/${questionaire.$key}`).push({properties: {name:  questionaire.name, startDate:  Moment.now(), status: 'open'}})).key;
 
         //pab: not sure if should be done like this => let's discuss
-        var subscription = this.getAssignedQuestions(questionaireId).subscribe(
+        var subscription = this.getAssignedQuestions(questionaire.$key).subscribe(
             questions => {
                 let i = 0;
                 questions.forEach( question => {
                     question.position = i++;
-                    this.db.database.ref(`user/answers/${userId}/${questionaireId}/${key}/questions/${question.$key}`).set(question);
+                    this.db.database.ref(`user/answers/${userId}/${questionaire.$key}/${key}/questions/${question.$key}`).set(question);
                 });
                 subscription.unsubscribe();
             }

@@ -21,6 +21,8 @@ import {firebaseConfig} from "../environments/firebase.config";
 import { MyApp } from './app.component';
 import { QuestionairesPage } from './../pages/questionaires/questionaires';
 import { QuestionaireDetailPage } from './../pages/questionaire-detail/questionaire-detail';
+import { UserQuestionairesPage } from './../pages/user-questionaires/user-questionaires';
+import { UserReportPage } from './../pages/user-report/user-report';
 
 import { QuestionaireFormComponent } from './../components/questionaire-form/questionaire-form';
 import { QuestionairesListComponent } from './../components/questionaires-list/questionaires-list';
@@ -36,6 +38,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     QuestionsPage,
     QuestionDetailPage,
     QuestionairesPage,
+    UserQuestionairesPage,
+    UserReportPage,
     QuestionaireDetailPage,
     QuestionaireFormComponent,
     QuestionFormComponent,
@@ -58,6 +62,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     QuestionsPage,
     QuestionDetailPage,
     QuestionairesPage,
+    UserQuestionairesPage,
+    UserReportPage,
     QuestionaireDetailPage
   ],
   providers: [

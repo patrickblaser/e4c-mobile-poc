@@ -22,21 +22,22 @@
       <ion-list-header>
           <ion-icon name="list" item-left></ion-icon>Defined Questionaires
         </ion-list-header>
-    <button ion-item *ngFor="let questionaire of questionaires | propertyFilter: 'name': searchFilter" (click)="editQuestionaire($event, questionaire)">
-            {{questionaire.name}}
-            <ion-badge></ion-badge>
-            <div class="item-note" item-right>
-                <button ion-button ion-stop-event="click" (click)="generateForUser($event, questionaire)">
-                  <ion-icon name="play"></ion-icon>
-                </button>
-                <button ion-button ion-stop-event="click" (click)="duplicateQuestionaire($event, questionaire)">
-                    <ion-icon name="copy"></ion-icon>
-                </button>
-    <button ion-button color="danger" ion-stop-event="click" (click)="deleteQuestionaire($event, questionaire)">
-                    <ion-icon name="trash"></ion-icon>
-                </button>
-    </div>
-    </button>
+        
+        <button ion-item *ngFor="let questionaire of questionaires | propertyFilter: 'name': searchFilter" (click)="editQuestionaire($event, questionaire)">
+          {{questionaire.name}}
+          <ion-badge></ion-badge>
+          <div class="item-note" item-right>
+              <button ion-button ion-stop-event="click" (click)="generateForUser($event, questionaire)">
+                <ion-icon name="play"></ion-icon>
+              </button>
+              <button ion-button ion-stop-event="click" (click)="duplicateQuestionaire($event, questionaire)">
+                  <ion-icon name="copy"></ion-icon>
+              </button>
+  <button ion-button color="danger" ion-stop-event="click" (click)="deleteQuestionaire($event, questionaire)">
+                  <ion-icon name="trash"></ion-icon>
+              </button>
+  </div>
+  </button>
 
     <!--
   <ion-item-sliding *ngFor="let questionaire of questionaires" (click)="editSelected($event, questionaire)">

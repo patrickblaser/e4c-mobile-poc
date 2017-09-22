@@ -60,8 +60,7 @@ export class QuestionairesPage {
   }
 
   generateForUser(event, questionaire) {
-    let key = this.questionairesService.generateQuestionaireForUser(questionaire.$key, 'user123');
-    this.navCtrl.push(QuestionPage, { questionaireId: questionaire.$key, key: key, userId: 'user123'});
+    let key = this.questionairesService.generateQuestionaireForUser(questionaire, 'user123');
     event.stopPropagation();
   }
 

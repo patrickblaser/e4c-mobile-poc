@@ -17,29 +17,22 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col col-12>
-                <ion-item>
+            <ion-col col-12 text-right>
                     <ion-badge item-end>{{ index + 1 }} of {{ questions?.length }}</ion-badge>
-                  </ion-item>
-                  </ion-col>
+            </ion-col>
           </ion-row>
           <ion-row>
-              <ion-col col-12>
-                 {{ currentQuestion?.value }} {{ answer }}
+              <ion-col col-12 text-center>
+                 {{ currentQuestion?.value }}
               </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-3>
-            </ion-col>
-        <ion-col col-6>
-          <ion-item>
-            <ion-range min="-0" max="100" pin="false" [(ngModel)]="answer" color="secondary" (ionChange)="valueChanged()">
+        <ion-col col-lg-6 offset-lg-3 col-12 col-sm-10 offset-sm-1>
+            <ion-range min="-0" max="100" pin="false" [(ngModel)]="answer" color="secondary" (ionBlur)="valueChanged()">
               <ion-icon range-left small name="cloud"></ion-icon>
               <ion-icon range-right name="sunny"></ion-icon>
             </ion-range>
-          </ion-item>
-            </ion-col>
-          <ion-col col-3 ></ion-col>
+          </ion-col>
         </ion-row>
       </ion-grid>
 </ion-content>
