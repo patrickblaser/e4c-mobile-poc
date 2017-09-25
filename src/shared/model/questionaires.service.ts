@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from "rxjs/Rx";
 import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireAuth } from "angularfire2/auth";
 import { Question } from "./question";
 import { Questionaire } from './questionaire';
 import { Promise } from "firebase/app";
@@ -9,12 +10,16 @@ import Moment from "Moment";
 @Injectable()
 export class QuestionairesService {
 
-    constructor(private db: AngularFireDatabase) {
+    constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
     }
 
     getAllQuestions(): Observable<Question[]> {
         return this.db.list('questions')
             .map(Question.fromJsonList);  //TODO: actually not necessary - works anyway - by chance ???
+    }
+
+    login(): any {
+        return this.auth.auth.signInWithEmailAndPassword('info@spezialfall.ch', 'e4ceasy');
     }
 
     saveQuestion(key: string, question: Question): void {

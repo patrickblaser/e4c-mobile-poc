@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { QuestionaireDetailPage } from './../questionaire-detail/questionaire-detail';
@@ -18,7 +18,7 @@ import { QuestionPage } from './../question/question';
   selector: 'page-questionaires',
   templateUrl: 'questionaires.html',
 })
-export class QuestionairesPage {
+export class QuestionairesPage implements OnInit {
 
   questionaires: Questionaire[] = [];
   searchFilter: string = '';
@@ -28,18 +28,12 @@ export class QuestionairesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad QuestionairesPage');
-
-    this.questionairesService.getAllQuestionaires()
-      .do(console.log)
-      .subscribe(
-      questionaires => this.questionaires = questionaires
-      )
   }
 
-  ngInit() {
-    //urm: double subscription with ionViewDidLoad?
-    console.log('ngInit QuestionairesPage');
+  ngOnInit() {
+    console.log('ionViewDidLoad QuestionairesPage');
+    this.questionairesService.login();
+    
     this.questionairesService.getAllQuestionaires()
       .do(console.log)
       .subscribe(
